@@ -25,6 +25,10 @@ public int getScore()
     int p = 0;
     if (levelOne.goalReached() == true) p += levelOne.getPoints();
     if (levelTwo.goalReached() == true) p += levelTwo.getPoints();
+    else{
+        if(isBonus()) return p * 3;
+        return p;
+    }
     if (levelThree.goalReached() == true) p += levelThree.getPoints();
     if (isBonus()) return p * 3;
     return p;
@@ -43,4 +47,8 @@ public int playManyTimes(int num)
     return score;
 }
 // There may be instance variables, constructors, and methods that are not shown.
+public void reachgoals(boolean one, boolean two, boolean three){
+    if (one) levelOne.reachgoal();
+    
+}
 }

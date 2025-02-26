@@ -3,6 +3,7 @@ public class Game
 private Level levelOne;
 private Level levelTwo;
 private Level levelThree;
+private boolean bonus = false;
 /** Postcondition: All instance variables have been initialized. */
 public Game(){
     levelOne = new Level();
@@ -12,18 +13,23 @@ public Game(){
 /** Returns true if this game is a bonus game and returns false otherwise */
 public boolean isBonus()
 {
-    return true;
+    return bonus;
 }
 /** Simulates the play of this Game (consisting of three levels) and updates all relevant
 * game data
 */
 public void play()
-{ /* implementation not shown */ }
+{ 
+    reachGoals(true, true, true);
+    setPoints(200, 100, 500);
+    makeBonus();
+}
 /** Returns the score earned in the most recently played game, as described in part (a) */
 public int getScore()
 {
     int p = 0;
     if (levelOne.goalReached() == true) p += levelOne.getPoints();
+    else return 0;
     if (levelTwo.goalReached() == true) p += levelTwo.getPoints();
     else{
         if(isBonus()) return p * 3;
@@ -42,13 +48,22 @@ public int playManyTimes(int num)
     int score = 0;
     for (int i = 0; i < num; i++)
         play();
-        s = getScore();
+        int s = getScore();
         if (s > score) score = s;
     return score;
 }
 // There may be instance variables, constructors, and methods that are not shown.
-public void reachgoals(boolean one, boolean two, boolean three){
-    if (one) levelOne.reachgoal();
-    
+public void reachGoals(boolean one, boolean two, boolean three){
+    if (one) levelOne.reachGoal();
+    if (two) levelTwo.reachGoal();
+    if (three) levelThree.reachGoal();
+}
+public void makeBonus(){
+    bonus = true;
+}
+public void setPoints(int one, int two, int three){
+    levelOne.setPoints(one);
+    levelTwo.setPoints(two);
+    levelThree.setPoints(three);
 }
 }
